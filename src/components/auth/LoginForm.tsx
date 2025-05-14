@@ -1,3 +1,4 @@
+
 "use client";
 
 import * as React from "react";
@@ -15,8 +16,9 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
-import { signInWithEmail } from "@/actions/auth";
-import { useRouter } from "next/navigation";
+import { useAuth } from "@/contexts/AuthContext"; // Changed import
+// import { signInWithEmail } from "@/actions/auth"; // Removed server action import
+// import { useRouter } from "next/navigation"; // useRouter is now handled by AuthContext signIn
 
 const formSchema = z.object({
   email: z.string().email({ message: "Invalid email address." }),
@@ -27,7 +29,8 @@ type LoginFormValues = z.infer<typeof formSchema>;
 
 export function LoginForm() {
   const { toast } = useToast();
-  const router = useRouter();
+  const { signIn } = useAuth(); // Use signIn from AuthContext
+  // const router = useRouter(); // No longer needed here
   const [isLoading, setIsLoading] = React.useState(false);
 
   const form = useForm<LoginFormValues>({
@@ -40,12 +43,12 @@ export function LoginForm() {
 
   async function onSubmit(values: LoginFormValues) {
     setIsLoading(true);
-    const result = await signInWithEmail(values);
+    const result = await signIn(values); // Call signIn from context
 
     if (result.error) {
       toast({
         title: "Login Failed",
-        description: result.error.message,
+        description: result.error.message || "An unexpected error occurred.",
         variant: "destructive",
       });
     } else {
@@ -53,8 +56,7 @@ export function LoginForm() {
         title: "Login Successful",
         description: "Redirecting to your dashboard...",
       });
-      router.push("/app/barbershops"); // Or refresh to let middleware handle redirect
-      router.refresh(); // Ensure middleware reruns if needed
+      // Navigation is handled by the signIn method in AuthContext
     }
     setIsLoading(false);
   }

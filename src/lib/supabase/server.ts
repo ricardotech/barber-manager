@@ -7,9 +7,23 @@ export function createSupabaseServerClient() {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
-  if (!supabaseUrl || !supabaseAnonKey) {
+  if (!supabaseUrl) {
     throw new Error(
-      "Supabase URL and Anon Key are required for the server client. Check your environment variables (e.g., .env.local file for local development or deployment settings) and ensure NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY are set."
+      "NEXT_PUBLIC_SUPABASE_URL is not set. Please check your environment variables (e.g., .env.local for local development, or deployment settings)."
+    );
+  }
+  if (!supabaseAnonKey) {
+    throw new Error(
+      "NEXT_PUBLIC_SUPABASE_ANON_KEY is not set. Please check your environment variables (e.g., .env.local for local development, or deployment settings)."
+    );
+  }
+
+  try {
+    // Validate that supabaseUrl is a valid URL.
+    new URL(supabaseUrl);
+  } catch (e) {
+    throw new Error(
+      `The provided NEXT_PUBLIC_SUPABASE_URL "${supabaseUrl}" is not a valid URL. Please check its format (e.g., it should start with http:// or https://).`
     );
   }
 
@@ -31,3 +45,4 @@ export function createSupabaseServerClient() {
     }
   )
 }
+
