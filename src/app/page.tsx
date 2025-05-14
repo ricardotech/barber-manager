@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useEffect } from 'react';
@@ -13,7 +12,7 @@ export default function RootPage() {
   useEffect(() => {
     if (!loading) {
       if (user) {
-        router.replace('/app/barbershops');
+        router.replace('/app/dashboard'); // Changed redirect to /app/dashboard
       } else {
         router.replace('/login');
       }

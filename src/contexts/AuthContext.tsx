@@ -98,12 +98,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
     if (data.session && data.user) {
       setUser(data.user); // Update context immediately
       setError(null);
-      // setLoading(false); // onAuthStateChange listener will also set this, but being explicit can be good.
-                         // However, the listener is generally preferred as the single source of truth for auth events.
-                         // Let's rely on the listener to set loading to false on SIGNED_IN.
-                         // If issues persist, this is a point to reconsider.
-
-      router.push('/app/barbershops'); 
+      router.push('/app/dashboard'); // Changed redirect to /app/dashboard
       router.refresh(); // Important for server components to pick up the new session
       // setLoading will be managed by the onAuthStateChange listener triggered by signIn.
       return { error: null };

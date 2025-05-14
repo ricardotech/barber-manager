@@ -1,9 +1,8 @@
-
 "use client";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Store, Scissors, BarChartBig, ListChecks, CreditCard } from "lucide-react";
+import { Store, Scissors, BarChartBig, ListChecks, CreditCard, LayoutDashboard } from "lucide-react"; // Added LayoutDashboard
 import {
   Sidebar,
   SidebarHeader,
@@ -17,7 +16,7 @@ import {
 import { cn } from "@/lib/utils";
 
 const mainNavItems = [
-  // { href: "/app/dashboard", label: "Dashboard", icon: Home }, // Future
+  { href: "/app/dashboard", label: "Dashboard", icon: LayoutDashboard }, // Added Dashboard
   { href: "/app/barbershops", label: "My Barbershops", icon: Store },
   // { href: "/app/settings", label: "Settings", icon: Settings }, // Future
 ];
@@ -35,7 +34,7 @@ export function AppSidebar() {
   return (
     <Sidebar collapsible="icon"> {/* Allow collapsing to icons */}
       <SidebarHeader className="p-4">
-        <Link href="/app/barbershops" className="flex items-center gap-2">
+        <Link href="/app/dashboard" className="flex items-center gap-2"> {/* Changed href to /app/dashboard */}
           <Scissors className="h-8 w-8 text-primary" />
           <span className="text-xl font-semibold text-foreground group-data-[collapsible=icon]:hidden">
             Manager
@@ -50,10 +49,11 @@ export function AppSidebar() {
                 <SidebarMenuButton
                   className={cn(
                     "w-full justify-start",
-                    pathname.startsWith(item.href) && item.href !== "/app" && "bg-sidebar-accent text-sidebar-accent-foreground", // Adjusted active state logic
-                    pathname === item.href && "bg-sidebar-accent text-sidebar-accent-foreground"
+                    // Simplified active state: exact match for dashboard, startsWith for others (like /app/barbershops and /app/barbershops/[id])
+                    pathname === item.href && "bg-sidebar-accent text-sidebar-accent-foreground",
+                    item.href !== "/app/dashboard" && pathname.startsWith(item.href) && pathname !== "/app/dashboard" && "bg-sidebar-accent text-sidebar-accent-foreground"
                   )}
-                  isActive={pathname.startsWith(item.href)}
+                  isActive={pathname === item.href || (item.href !== "/app/dashboard" && pathname.startsWith(item.href) && pathname !== "/app/dashboard")}
                   tooltip={{ children: item.label, side: "right", align: "center" }}
                 >
                   <item.icon className="h-5 w-5" />
