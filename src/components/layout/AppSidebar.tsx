@@ -1,8 +1,9 @@
+
 "use client";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, Store, Settings, Scissors } from "lucide-react";
+import { Store, Scissors, BarChartBig, ListChecks, CreditCard } from "lucide-react";
 import {
   Sidebar,
   SidebarHeader,
@@ -10,14 +11,23 @@ import {
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,
-} from "@/components/ui/sidebar"; // Using the ShadCN sidebar
+  SidebarSeparator,
+  SidebarGroupLabel,
+} from "@/components/ui/sidebar"; 
 import { cn } from "@/lib/utils";
 
-const navItems = [
+const mainNavItems = [
   // { href: "/app/dashboard", label: "Dashboard", icon: Home }, // Future
-  { href: "/app/barbershops", label: "Barbershops", icon: Store },
+  { href: "/app/barbershops", label: "My Barbershops", icon: Store },
   // { href: "/app/settings", label: "Settings", icon: Settings }, // Future
 ];
+
+const platformAdminNavItems = [
+  { href: "/app/platform-admin/kpis", label: "Platform KPIs", icon: BarChartBig },
+  { href: "/app/platform-admin/plans", label: "Manage Plans", icon: ListChecks },
+  { href: "/app/platform-admin/billing", label: "Platform Billing", icon: CreditCard },
+];
+
 
 export function AppSidebar() {
   const pathname = usePathname();
@@ -34,15 +44,42 @@ export function AppSidebar() {
       </SidebarHeader>
       <SidebarContent>
         <SidebarMenu>
-          {navItems.map((item) => (
+          {mainNavItems.map((item) => (
             <SidebarMenuItem key={item.href}>
               <Link href={item.href} legacyBehavior passHref>
                 <SidebarMenuButton
                   className={cn(
                     "w-full justify-start",
+                    pathname.startsWith(item.href) && item.href !== "/app" && "bg-sidebar-accent text-sidebar-accent-foreground", // Adjusted active state logic
                     pathname === item.href && "bg-sidebar-accent text-sidebar-accent-foreground"
                   )}
-                  isActive={pathname === item.href}
+                  isActive={pathname.startsWith(item.href)}
+                  tooltip={{ children: item.label, side: "right", align: "center" }}
+                >
+                  <item.icon className="h-5 w-5" />
+                  <span className="group-data-[collapsible=icon]:hidden">{item.label}</span>
+                </SidebarMenuButton>
+              </Link>
+            </SidebarMenuItem>
+          ))}
+        </SidebarMenu>
+
+        {/* Platform Admin Section - In a real app, this would be conditionally rendered based on user role */}
+        <SidebarSeparator className="my-2" />
+        
+        <SidebarGroupLabel className="px-4 pt-2 text-xs font-medium uppercase text-sidebar-foreground/70 group-data-[collapsible=icon]:pt-2 group-data-[collapsible=icon]:px-2 group-data-[collapsible=icon]:text-center group-data-[collapsible=icon]:pb-1">
+            <span className="group-data-[collapsible=icon]:hidden">Platform</span>
+        </SidebarGroupLabel>
+        <SidebarMenu>
+          {platformAdminNavItems.map((item) => (
+            <SidebarMenuItem key={item.href}>
+              <Link href={item.href} legacyBehavior passHref>
+                <SidebarMenuButton
+                  className={cn(
+                    "w-full justify-start",
+                    pathname.startsWith(item.href) && "bg-sidebar-accent text-sidebar-accent-foreground"
+                  )}
+                  isActive={pathname.startsWith(item.href)}
                   tooltip={{ children: item.label, side: "right", align: "center" }}
                 >
                   <item.icon className="h-5 w-5" />
