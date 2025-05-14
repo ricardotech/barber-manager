@@ -1,39 +1,40 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
 }
 
 @layer base {
   :root {
     --background: 0 0% 6.3%; /* #101010 */
-    --foreground: 0 0% 98%; /* #FAFAFA (white) */
+    --foreground: 0 0% 100%; /* #FFFFFF */
 
-    --card: 0 0% 11%; /* #1C1C1C cardBackground */
-    --card-foreground: 0 0% 98%;
+    --card: 0 0% 11%; /* #1C1C1C */
+    --card-foreground: 0 0% 100%; /* #FFFFFF */
 
     --popover: 0 0% 11%; /* #1C1C1C */
-    --popover-foreground: 0 0% 98%;
+    --popover-foreground: 0 0% 100%; /* #FFFFFF */
 
     --primary: 217.2 100% 52%; /* #0A84FF accentBlue */
-    --primary-foreground: 0 0% 98%; /* White text on blue */
+    --primary-foreground: 0 0% 100%; /* #FFFFFF text on blue */
 
     --secondary: 240 2% 17.3%; /* #2C2C2E inputBackground */
-    --secondary-foreground: 0 0% 98%;
+    --secondary-foreground: 0 0% 100%; /* #FFFFFF */
 
     --muted: 240 1% 22.4%; /* #38383A separator */
     --muted-foreground: 0 0% 69%; /* #B0B0B0 textSecondary */
 
     --accent: 36.5 100% 50%; /* #FF9500 accentOrange */
-    --accent-foreground: 0 0% 6.3%; /* Dark text on orange */
+    --accent-foreground: 0 0% 6.3%; /* #101010 Dark text on orange */
 
     --destructive: 10 100% 60.2%; /* #FF3B30 accentRed */
-    --destructive-foreground: 0 0% 98%;
+    --destructive-foreground: 0 0% 100%; /* #FFFFFF */
 
     --border: 240 1% 22.4%; /* #38383A separator */
-    --input: 240 2% 17.3%; /* #2C2C2E */
+    --input: 240 2% 17.3%; /* #2C2C2E inputBackground */
     --ring: 217.2 100% 52%; /* #0A84FF */
 
     --chart-1: 12 76% 61%;
@@ -44,12 +45,13 @@ body {
     --radius: 0.5rem;
 
     /* Sidebar specific colors, aligning with ui/sidebar.tsx variables */
-    --sidebar-background: 0 0% 7.5%; /* e.g. #121212 */
-    --sidebar-foreground: 0 0% 80%; /* #CCCCCC */
+    /* Using main theme colors for consistency, slight variations for depth if needed */
+    --sidebar-background: 0 0% 7.5%; /* Slightly different from main bg, e.g., #131313 */
+    --sidebar-foreground: 0 0% 80%; /* #CCCCCC text on sidebar */
     --sidebar-primary: 217.2 100% 52%; /* accentBlue for active/important items */
-    --sidebar-primary-foreground: 0 0% 98%; /* White text on sidebar primary */
+    --sidebar-primary-foreground: 0 0% 100%; /* White text on sidebar primary */
     --sidebar-accent: 0 0% 15%; /* #262626 Darker hover for items */
-    --sidebar-accent-foreground: 0 0% 95%; /* #f2f2f2 Text on sidebar accent */
+    --sidebar-accent-foreground: 0 0% 100%; /* White text on sidebar accent */
     --sidebar-border: 0 0% 12%; /* #1f1f1f */
     --sidebar-ring: 217.2 100% 52%; /* accentBlue for focus rings */
   }
@@ -57,21 +59,21 @@ body {
   /* Keep .dark selector for tailwind.config.ts compatibility, but it applies the same vars as :root */
   .dark {
     --background: 0 0% 6.3%;
-    --foreground: 0 0% 98%;
+    --foreground: 0 0% 100%;
     --card: 0 0% 11%;
-    --card-foreground: 0 0% 98%;
+    --card-foreground: 0 0% 100%;
     --popover: 0 0% 11%;
-    --popover-foreground: 0 0% 98%;
+    --popover-foreground: 0 0% 100%;
     --primary: 217.2 100% 52%;
-    --primary-foreground: 0 0% 98%;
+    --primary-foreground: 0 0% 100%;
     --secondary: 240 2% 17.3%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary-foreground: 0 0% 100%;
     --muted: 240 1% 22.4%;
     --muted-foreground: 0 0% 69%;
     --accent: 36.5 100% 50%;
     --accent-foreground: 0 0% 6.3%;
     --destructive: 10 100% 60.2%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive-foreground: 0 0% 100%;
     --border: 240 1% 22.4%;
     --input: 240 2% 17.3%;
     --ring: 217.2 100% 52%;
@@ -84,9 +86,9 @@ body {
     --sidebar-background: 0 0% 7.5%;
     --sidebar-foreground: 0 0% 80%;
     --sidebar-primary: 217.2 100% 52%;
-    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 0 0% 15%;
-    --sidebar-accent-foreground: 0 0% 95%;
+    --sidebar-accent-foreground: 0 0% 100%;
     --sidebar-border: 0 0% 12%;
     --sidebar-ring: 217.2 100% 52%;
   }
@@ -98,5 +100,9 @@ body {
   }
   body {
     @apply bg-background text-foreground;
+    font-family: var(--font-geist-sans);
+  }
+  h1,h2,h3,h4,h5,h6 {
+    font-family: var(--font-geist-sans);
   }
 }

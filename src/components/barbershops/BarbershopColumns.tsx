@@ -1,3 +1,4 @@
+
 "use client";
 
 import type { ColumnDef } from "@tanstack/react-table";
@@ -13,12 +14,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-// import { deleteBarbershop } from "@/actions/barbershops"; // For delete action
-// import { useToast } from "@/hooks/use-toast";
-// import { useRouter } from "next/navigation";
-
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
+import { deleteBarbershop } from "@/actions/barbershops"; 
+import { useToast } from "@/hooks/use-toast";
+import { useRouter } from "next/navigation";
+import React from "react"; // Required for useToast and useRouter hooks
 
 export const columns: ColumnDef<BarbershopRow>[] = [
   {
@@ -38,10 +37,18 @@ export const columns: ColumnDef<BarbershopRow>[] = [
   {
     accessorKey: "address",
     header: "Address",
+    cell: ({ row }) => {
+        const address = row.getValue("address") as string | undefined | null;
+        return address ? <div className="truncate max-w-xs">{address}</div> : <span className="text-muted-foreground">N/A</span>;
+    }
   },
   {
     accessorKey: "phone",
     header: "Phone",
+    cell: ({ row }) => {
+        const phone = row.getValue("phone") as string | undefined | null;
+        return phone || <span className="text-muted-foreground">N/A</span>;
+    }
   },
   {
     accessorKey: "created_at",
@@ -55,19 +62,24 @@ export const columns: ColumnDef<BarbershopRow>[] = [
     id: "actions",
     cell: ({ row }) => {
       const barbershop = row.original;
-      // const { toast } = useToast();
-      // const router = useRouter();
+      const { toast } = useToast();
+      const router = useRouter();
+      const [isDeleting, setIsDeleting] = React.useState(false);
 
-      // const handleDelete = async () => {
-      //   if (!confirm(\`Are you sure you want to delete ${barbershop.name}?\`)) return;
-      //   const result = await deleteBarbershop(barbershop.id);
-      //   if (result.error) {
-      //     toast({ title: "Error", description: result.error, variant: "destructive" });
-      //   } else {
-      //     toast({ title: "Success", description: "Barbershop deleted." });
-      //     router.refresh(); // Refresh data
-      //   }
-      // };
+      const handleDelete = async () => {
+        if (isDeleting) return;
+        if (!confirm(`Are you sure you want to delete ${barbershop.name}? This action cannot be undone.`)) return;
+        
+        setIsDeleting(true);
+        const result = await deleteBarbershop(barbershop.id);
+        if (result.error) {
+          toast({ title: "Error deleting barbershop", description: result.error, variant: "destructive" });
+        } else {
+          toast({ title: "Success", description: `Barbershop "${barbershop.name}" deleted successfully.` });
+          router.refresh(); // Refresh data on the page
+        }
+        setIsDeleting(false);
+      };
 
       return (
         <DropdownMenu>
@@ -85,11 +97,15 @@ export const columns: ColumnDef<BarbershopRow>[] = [
                 View/Edit
               </Link>
             </DropdownMenuItem>
-            {/* <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={handleDelete} className="text-destructive focus:text-destructive focus:bg-destructive/10">
+            <DropdownMenuSeparator />
+            <DropdownMenuItem 
+              onClick={handleDelete} 
+              className="text-destructive focus:text-destructive focus:bg-destructive/10"
+              disabled={isDeleting}
+            >
               <Trash2 className="mr-2 h-4 w-4" />
-              Delete
-            </DropdownMenuItem> */}
+              {isDeleting ? "Deleting..." : "Delete"}
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );

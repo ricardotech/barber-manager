@@ -1,4 +1,6 @@
+
 import { BarbershopForm } from "@/components/barbershops/BarbershopForm";
+import { ThemeEditorForm } from "@/components/barbershops/ThemeEditorForm";
 import { getBarbershopById } from "@/actions/barbershops";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -30,7 +32,7 @@ export default async function BarbershopDetailPage({ params }: BarbershopDetailP
           <TabsTrigger value="services" disabled>Services</TabsTrigger>
           <TabsTrigger value="professionals" disabled>Professionals</TabsTrigger>
           <TabsTrigger value="schedule" disabled>Schedule</TabsTrigger>
-          <TabsTrigger value="theme" disabled>Theme</TabsTrigger>
+          <TabsTrigger value="theme">Theme</TabsTrigger>
         </TabsList>
         
         <TabsContent value="details">
@@ -77,16 +79,7 @@ export default async function BarbershopDetailPage({ params }: BarbershopDetailP
         </TabsContent>
 
         <TabsContent value="theme">
-           <Card>
-            <CardHeader>
-              <CardTitle>Mobile App Theme</CardTitle>
-              <CardDescription>Customize colors and logo for the mobile app.</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="text-muted-foreground">Theme editor UI will be here.</p>
-              {/* Placeholder for ThemeEditor component (color pickers, logo upload) */}
-            </CardContent>
-          </Card>
+           <ThemeEditorForm barbershopId={barbershop.id} initialData={barbershop.theme} />
         </TabsContent>
       </Tabs>
     </div>
