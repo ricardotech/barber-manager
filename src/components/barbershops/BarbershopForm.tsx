@@ -88,7 +88,7 @@ export function BarbershopForm({ initialData }: BarbershopFormProps) {
         title: "Success!",
         description: `Barbershop ${initialData ? 'updated' : 'created'} successfully.`,
       });
-      router.push("/app/barbershops");
+      router.push("//barbershops");
       router.refresh(); 
     }
     setIsLoading(false);

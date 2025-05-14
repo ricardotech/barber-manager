@@ -9,7 +9,7 @@ export default function AppLayout({ children }: PropsWithChildren) {
   return (
     <SidebarProvider defaultOpen>
       <PrivateRoute>
-        <div className="flex min-h-screen bg-background">
+        <div className="flex min-h-screen bg-background w-full">
           <AppSidebar />
           <div className="flex flex-1 flex-col">
             <AppHeader />

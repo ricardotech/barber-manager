@@ -90,7 +90,7 @@ export async function createBarbershop(formData: Partial<Omit<Barbershop, 'id' |
     return { error: error.message, data: null };
   }
 
-  revalidatePath("/app/barbershops");
+  revalidatePath("/barbershops");
   return { error: null, data };
 }
 
@@ -121,8 +121,8 @@ export async function updateBarbershop(id: string, formData: Partial<Barbershop>
     return { error: error.message, data: null };
   }
   
-  revalidatePath("/app/barbershops");
-  revalidatePath(`/app/barbershops/${id}`);
+  revalidatePath("/barbershops");
+  revalidatePath(`/barbershops/${id}`);
   return { error: null, data };
 }
 
@@ -147,6 +147,6 @@ export async function deleteBarbershop(id: string) {
     return { error: error.message };
   }
   
-  revalidatePath("/app/barbershops");
+  revalidatePath("/barbershops");
   return { error: null };
 }

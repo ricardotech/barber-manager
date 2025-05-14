@@ -12,7 +12,7 @@ export default function RootPage() {
   useEffect(() => {
     if (!loading) {
       if (user) {
-        router.replace('/app/dashboard'); // Changed redirect to /app/dashboard
+        router.replace('/dashboard'); // Changed redirect to /app/dashboard
       } else {
         router.replace('/login');
       }

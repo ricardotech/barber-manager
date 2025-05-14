@@ -16,15 +16,15 @@ import {
 import { cn } from "@/lib/utils";
 
 const mainNavItems = [
-  { href: "/app/dashboard", label: "Dashboard", icon: LayoutDashboard }, // Added Dashboard
-  { href: "/app/barbershops", label: "My Barbershops", icon: Store },
-  // { href: "/app/settings", label: "Settings", icon: Settings }, // Future
+  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard }, // Added Dashboard
+  { href: "/barbershops", label: "My Barbershops", icon: Store },
+  // { href: "/settings", label: "Settings", icon: Settings }, // Future
 ];
 
 const platformAdminNavItems = [
-  { href: "/app/platform-admin/kpis", label: "Platform KPIs", icon: BarChartBig },
-  { href: "/app/platform-admin/plans", label: "Manage Plans", icon: ListChecks },
-  { href: "/app/platform-admin/billing", label: "Platform Billing", icon: CreditCard },
+  { href: "/platform-admin/kpis", label: "Platform KPIs", icon: BarChartBig },
+  { href: "/platform-admin/plans", label: "Manage Plans", icon: ListChecks },
+  { href: "/platform-admin/billing", label: "Platform Billing", icon: CreditCard },
 ];
 
 
@@ -34,7 +34,7 @@ export function AppSidebar() {
   return (
     <Sidebar collapsible="icon"> {/* Allow collapsing to icons */}
       <SidebarHeader className="p-4">
-        <Link href="/app/dashboard" className="flex items-center gap-2"> {/* Changed href to /app/dashboard */}
+        <Link href="/dashboard" className="flex items-center gap-2"> {/* Changed href to /app/dashboard */}
           <Scissors className="h-8 w-8 text-primary" />
           <span className="text-xl font-semibold text-foreground group-data-[collapsible=icon]:hidden">
             Manager
@@ -51,9 +51,9 @@ export function AppSidebar() {
                     "w-full justify-start",
                     // Simplified active state: exact match for dashboard, startsWith for others (like /app/barbershops and /app/barbershops/[id])
                     pathname === item.href && "bg-sidebar-accent text-sidebar-accent-foreground",
-                    item.href !== "/app/dashboard" && pathname.startsWith(item.href) && pathname !== "/app/dashboard" && "bg-sidebar-accent text-sidebar-accent-foreground"
+                    item.href !== "/dashboard" && pathname.startsWith(item.href) && pathname !== "/dashboard" && "bg-sidebar-accent text-sidebar-accent-foreground"
                   )}
-                  isActive={pathname === item.href || (item.href !== "/app/dashboard" && pathname.startsWith(item.href) && pathname !== "/app/dashboard")}
+                  isActive={pathname === item.href || (item.href !== "/dashboard" && pathname.startsWith(item.href) && pathname !== "/dashboard")}
                   tooltip={{ children: item.label, side: "right", align: "center" }}
                 >
                   <item.icon className="h-5 w-5" />

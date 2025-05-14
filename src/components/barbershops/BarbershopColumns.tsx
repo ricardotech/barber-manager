@@ -92,7 +92,7 @@ export const columns: ColumnDef<BarbershopRow>[] = [
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
             <DropdownMenuItem asChild>
-              <Link href={`/app/barbershops/${barbershop.id}`}>
+              <Link href={`/barbershops/${barbershop.id}`}>
                 <Edit className="mr-2 h-4 w-4" />
                 View/Edit
               </Link>

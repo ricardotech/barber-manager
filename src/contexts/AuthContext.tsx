@@ -98,7 +98,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
     if (data.session && data.user) {
       setUser(data.user); // Update context immediately
       setError(null);
-      router.push('/app/dashboard'); // Changed redirect to /app/dashboard
+      router.push('/dashboard'); // Changed redirect to /app/dashboard
       router.refresh(); // Important for server components to pick up the new session
       // setLoading will be managed by the onAuthStateChange listener triggered by signIn.
       return { error: null };
